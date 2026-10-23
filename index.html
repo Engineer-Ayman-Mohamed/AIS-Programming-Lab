@@ -51,6 +51,29 @@ h2::after{content:"";display:block;height:4px;width:0;margin-top:8px;border-radi
 .tip{background:rgba(59,130,246,.08);border-radius:0 12px 12px 0;padding:8px 14px}
 #nx{box-shadow:0 0 0 0 rgba(59,130,246,.6);animation:pl 2s infinite}
 @keyframes pl{to{box-shadow:0 0 0 16px rgba(59,130,246,0)}}
+#qz{display:flex;flex-direction:column;gap:12px}
+.qh{display:flex;justify-content:space-between;color:var(--mu);font-size:.9rem}
+.qp{height:6px;background:var(--ln);border-radius:6px;overflow:hidden}
+.qp i{display:block;height:100%;background:linear-gradient(90deg,#1d4ed8,#60a5fa);border-radius:6px;animation:pw .6s ease}
+@keyframes pw{from{width:0}}
+.qc{background:var(--card);border:1px solid var(--ln);border-radius:18px;padding:18px;animation:qi .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes qi{from{opacity:0;transform:translateX(-30px)}}
+.qc h3{margin:0 0 10px;font-size:1.12rem;line-height:1.8}
+.qc .c{margin:10px 0}
+.k{color:var(--bl);font-family:ui-monospace,Menlo,monospace;font-size:.95em}
+.o{display:flex;gap:10px;width:100%;box-sizing:border-box;text-align:start;margin-top:10px;padding:12px 14px;border-radius:12px;border:1px solid var(--ln);background:transparent;color:var(--fg);font:inherit;cursor:pointer;transition:all .2s}
+.o:hover{border-color:var(--ac)}
+.o.s{background:rgba(59,130,246,.2);border-color:var(--ac);transform:scale(1.015)}
+.o b{color:var(--ac);min-width:20px}
+.bt{align-self:flex-start;padding:12px 24px;border:0;border-radius:12px;background:linear-gradient(90deg,#1d4ed8,#3b82f6);color:#fff;font:inherit;font-weight:600;cursor:pointer;transition:opacity .2s,transform .2s}
+.bt:disabled{opacity:.3;cursor:default}.bt:not(:disabled):hover{transform:translateY(-2px)}
+.sc{font-size:3.6rem;font-weight:800;color:var(--bl);line-height:1.2}
+.rh{margin:8px 0 0;font-size:1.15rem}
+.a{display:flex;gap:10px;align-items:baseline;margin-top:8px;padding:8px 12px;border-radius:10px;background:rgba(143,166,209,.1)}
+.a small{color:var(--mu);min-width:92px}
+.x .v{text-decoration:line-through;opacity:.7}
+.g{background:rgba(59,130,246,.18);border:1px solid var(--ac)}
+.g .v{color:var(--bl);font-weight:600}
 .r>*{opacity:0;transform:translateY(30px) scale(.97);filter:blur(8px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1),filter .7s ease}
 .r.in>*{opacity:1;transform:none;filter:none}
 .r.in>*:nth-child(2){transition-delay:.12s}.r.in>*:nth-child(3){transition-delay:.24s}.r.in>*:nth-child(4){transition-delay:.36s}.r.in>*:nth-child(5){transition-delay:.48s}
@@ -178,6 +201,13 @@ for day in range(1, 4):
 print("Total sales:", total_sales)<i>100, 200, 300 → 600.0</i></pre>
 </section>
 
+<section id="quiz" class="r">
+<div class="n">تدريب / 20 سؤال</div>
+<h2>اختبر نفسك</h2>
+<p>جاوب على كل الأسئلة بالترتيب. النتيجة والإجابات الصحيحة للأسئلة اللي غلطت فيها هتظهر في الآخر.</p>
+<div id="qz"></div>
+</section>
+
 <section class="r cover">
 <div class="n">خلاصة</div>
 <h2>اقرأ ← تتبّع ← اكتب ← كرّر</h2>
@@ -194,6 +224,41 @@ function cur(){var y=scrollY+innerHeight/3,i=0;S.forEach(function(s,k){if(s.offs
 addEventListener('scroll',function(){var m=document.documentElement.scrollHeight-innerHeight;bar.style.transform='scaleX('+(m>0?scrollY/m:0)+')'},{passive:true});
 function go(d){var i=Math.max(0,Math.min(S.length-1,cur()+d));S[i].scrollIntoView()}
 document.getElementById('nx').onclick=function(){go(1)};
+var Q=[
+['ما ناتج العملية التالية؟','10 // 3',['3.33','3','1','30'],1],
+['ما ناتج العملية التالية؟','10 % 3',['1','3','0','10'],0],
+['ما ناتج العملية التالية؟','2 ** 5',['10','25','32','7'],2],
+['ما نوع القيمة التي ترجعها {input()} دائمًا؟','',['bool','str','float','int'],1],
+['كم مرة تُنفَّذ هذه الحلقة؟','for i in range(1, 6):\n    print(i)',['5','4','6','7'],0],
+['أي علامة تُستخدم للمقارنة؟','',['=','//','==','**'],2],
+['ما ناتج المقارنة التالية؟','5 >= 5',['False','True','Error','0'],1],
+['أي فرع في {if / elif / else} ليس له شرط؟','',['if','elif','while','else'],3],
+['ما ناتج هذا الكود؟','x = input("1: ")\ny = input("2: ")\nprint(x + y)\n# inputs: 2 then 8',['10','28','2 8','Error'],1],
+['ماذا يطبع هذا الكود؟','number = 0\nif number > 0:\n    print("Positive")\nelif number < 0:\n    print("Negative")',['Positive','Negative','لا يطبع شيئًا','0'],2],
+['ما القيم التي يطبعها هذا الكود؟','for i in range(1, 8, 2):\n    print(i)',['1 2 3 4 5 6 7','1 3 5 7','1 3 5 7 9','2 4 6'],1],
+['ماذا يطبع هذا الكود؟','sales = 5000\nif sales >= 10000:\n    bonus = 1000\nelif sales >= 5000:\n    bonus = 500\nelse:\n    bonus = 0\nprint(bonus)',['1000','0','500','5000'],2],
+['ما القيم التي يطبعها هذا الكود؟','x = 2\nwhile x < 7:\n    print(x)\n    x = x + 2',['2 4 6 8','3 5 7','2 4 6','2 3 4 5 6'],2],
+['ماذا يطبع هذا الكود؟','number = 13\nif number % 2 == 0:\n    print("Even")\nelse:\n    print("Odd")',['Even','Odd','1','لا شيء'],1],
+['ما القيم التي يطبعها هذا الكود؟','for n in range(5, 0, -1):\n    print(n)',['4 3 2 1 0','5 4 3 2 1 0','1 2 3 4 5','5 4 3 2 1'],3],
+['لماذا قد تكون نتيجة {print(x + y)} هي 57 بدل 12 عند إدخال 5 و 7؟',  '',['لأن input ترجّع نصًا فيتم دمج القيمتين','لأن عملية الجمع خاطئة','لأن print بها خطأ','لأن 5 أكبر من 7'],0],
+['ماذا يحدث لو حذفنا السطر {number = number + 1} من هذه الحلقة؟','number = 1\nwhile number <= 5:\n    print(number)\n    number = number + 1',['يطبع 1 إلى 5','يتوقف فورًا','يظهر خطأ','يطبع 1 للأبد (حلقة لا نهائية)'],3],
+['ما الفرق بين {range(3)} و {range(1, 4)}؟','',['نفس القيم تمامًا','نفس عدد اللفات (3) لكن القيم 0,1,2 و 1,2,3','الأولى 4 لفات','الثانية 4 لفات'],1],
+['لماذا السطر {total = total + sales} صحيح لحساب مجموع 3 أيام؟','total = 0\nfor day in range(1, 4):\n    total = total + sales',['يمسح المجموع القديم','يعدّ الأيام فقط','يضيف القيمة الجديدة على المجموع القديم','يطبع المجموع'],2],
+['لو تحقق أكثر من شرط في {if / elif / else} كم Block يُنفَّذ؟','',['كل الـ Blocks التي شرطها True','أول Block شرطه True فقط','آخر Block فقط','لا شيء'],1]
+];
+var qi=0,pk=[],z=document.getElementById('qz');
+function k(s){return s.replace(/\{(.+?)\}/g,'<bdi dir="ltr" class="k">$1</bdi>')}
+function ot(t){return /[\u0600-\u06FF]/.test(t)?k(t):'<bdi dir="ltr">'+t+'</bdi>'}
+function cb(c){return c?'<pre class="c">'+c.replace(/</g,'&lt;')+'</pre>':''}
+function show(){var q=Q[qi];z.innerHTML='<div class="qh"><span>سؤال '+(qi+1)+' من 20</span><span>اختر إجابة واحدة</span></div><div class="qp"><i style="width:'+(qi/20*100)+'%"></i></div><div class="qc"><h3>'+k(q[0])+'</h3>'+cb(q[1])+q[2].map(function(t,j){return '<button class="o" data-j="'+j+'"><b>'+'ABCD'[j]+'</b><span>'+ot(t)+'</span></button>'}).join('')+'</div><button class="bt" disabled>'+(qi==19?'إنهاء وعرض النتيجة':'التالي')+'</button>'}
+function res(){var w=[],n=0;Q.forEach(function(q,i){if(pk[i]===q[3])n++;else w.push(i)});
+var m=n==20?'درجة كاملة، ممتاز!':n>=15?'مستواك قوي، راجع القليل بس':'راجع الشرح وحاول تاني';
+z.innerHTML='<div class="qc" style="text-align:center"><div class="sc"><span id="scn">0</span> / 20</div><p>'+m+'</p></div>'+(w.length?'<h3 class="rh">راجع الأسئلة اللي غلطت فيها ('+w.length+')</h3>'+w.map(function(i){var q=Q[i];return '<div class="qc"><h3>'+(i+1)+'. '+k(q[0])+'</h3>'+cb(q[1])+'<div class="a x"><small>إجابتك</small><span class="v">'+ot(q[2][pk[i]])+'</span></div><div class="a g"><small>الصحيحة ✓</small><span class="v">'+ot(q[2][q[3]])+'</span></div></div>'}).join(''):'<p class="tip">كل إجاباتك صحيحة.</p>')+'<button class="bt" data-r="1">إعادة المحاولة</button>';
+var c=0,s=document.getElementById('scn'),t=setInterval(function(){s.textContent=c;if(c++>=n)clearInterval(t)},60)}
+z.onclick=function(e){var o=e.target.closest('.o'),b=e.target.closest('.bt');
+if(o){pk[qi]=+o.dataset.j;[].forEach.call(z.querySelectorAll('.o'),function(x){x.classList.toggle('s',x===o)});z.querySelector('.bt').disabled=false}
+else if(b&&!b.disabled){if(b.dataset.r){qi=0;pk=[];show()}else if(qi<19){qi++;show()}else res();document.getElementById('quiz').scrollIntoView()}};
+show();
 addEventListener('keydown',function(e){if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(1)}if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();go(-1)}});
 </script>
 </body>
