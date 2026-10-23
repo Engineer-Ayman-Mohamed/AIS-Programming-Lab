@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>أساسيات Python للمبتدئين – AIS Programming Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#050b1f;--fg:#eaf2ff;--mu:#8fa6d1;--card:#0c1838;--ac:#3b82f6;--bl:#60a5fa;--code:#040a1c;--cf:#dbeafe;--ok:#7cc0ff;--ln:#1a2a5a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-snap-type:y proximity;scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:Cairo,system-ui,sans-serif;line-height:1.8}
+body::before,body::after{content:"";position:fixed;z-index:-1;width:60vmax;height:60vmax;border-radius:50%;filter:blur(90px);opacity:.35;pointer-events:none;animation:d 18s ease-in-out infinite alternate}
+body::before{background:#1d4ed8;top:-20vmax;right:-20vmax}
+body::after{background:#3b82f6;bottom:-25vmax;left:-25vmax;opacity:.2;animation-delay:-9s}
+@keyframes d{to{transform:translate(8vmax,6vmax) scale(1.15)}}
+#bar{position:fixed;top:env(safe-area-inset-top,0px);inset-inline:0;height:3px;background:linear-gradient(90deg,#1d4ed8,#60a5fa);box-shadow:0 0 12px #3b82f6;transform-origin:right;transform:scaleX(0);z-index:5}
+section{min-height:100dvh;box-sizing:border-box;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;gap:14px;max-width:640px;margin:auto;padding:56px 22px}
+.n{color:var(--ac);font-weight:800;font-size:.85rem;letter-spacing:.1em}
+h1,h2{margin:0;line-height:1.35}
+h1{font-size:2.2rem;font-weight:800}
+h2{font-size:1.7rem;font-weight:800}
+p{margin:0;color:var(--mu);font-size:1.05rem}
+.t{display:flex;flex-direction:column;gap:8px}
+.t div{background:var(--card);border:1px solid var(--ln);border-radius:12px;padding:8px 14px;display:flex;justify-content:space-between;gap:10px;font-size:.98rem}
+.t b{direction:ltr;color:var(--ac);font-family:ui-monospace,Menlo,monospace}
+.c{direction:ltr;text-align:left;background:var(--code);color:var(--cf);border-radius:14px;padding:14px 16px;margin:0;font:.92rem/1.7 ui-monospace,Menlo,Consolas,monospace;overflow-x:auto;border-top:3px solid var(--ac)}
+.c i{display:block;color:var(--ok);font-style:normal;margin-top:6px;padding-top:6px;border-top:1px dashed #334}
+.c u{text-decoration:none;color:#7b8aa8}
+.tip{border-inline-start:4px solid var(--bl);padding:4px 14px;color:var(--fg);font-size:1rem}
+.cover{text-align:center;align-items:center}
+.cover h1 span{background:linear-gradient(90deg,#60a5fa,#2563eb,#bfdbfe,#60a5fa);background-size:300%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:g 5s linear infinite}
+@keyframes g{to{background-position:300% 0}}
+.by{margin-top:18px;padding:12px 18px;border:1px solid var(--ln);border-radius:14px;background:var(--card);font-size:.95rem}
+.by b{display:block;font-size:1.1rem}
+.hint{color:var(--mu);font-size:.85rem;animation:b 1.6s infinite}
+@keyframes b{50%{transform:translateY(6px)}}
+.n{display:inline-block;align-self:flex-start;background:rgba(59,130,246,.15);border:1px solid rgba(96,165,250,.35);padding:0 14px;border-radius:99px}
+.cover .n{align-self:center}
+h2::after{content:"";display:block;height:4px;width:0;margin-top:8px;border-radius:4px;background:linear-gradient(90deg,#2563eb,#93c5fd);transition:width .9s cubic-bezier(.2,.8,.2,1) .4s}
+.in h2::after{width:72px}
+.cover h2::after{margin-inline:auto}
+.r .t div{opacity:0;transform:translateX(-28px);transition:opacity .5s ease,transform .5s ease,border-color .3s}
+.r.in .t div{opacity:1;transform:none}
+.r.in .t div:nth-child(1){transition-delay:.4s}.r.in .t div:nth-child(2){transition-delay:.5s}.r.in .t div:nth-child(3){transition-delay:.6s}.r.in .t div:nth-child(4){transition-delay:.7s}.r.in .t div:nth-child(5){transition-delay:.8s}
+.t div:hover{border-color:var(--ac)}
+.c{box-shadow:0 12px 40px -14px rgba(59,130,246,.55);animation:gl 4s ease-in-out infinite}
+@keyframes gl{50%{box-shadow:0 12px 50px -8px rgba(96,165,250,.7)}}
+.c i{opacity:0;transform:translateY(8px);transition:opacity .6s ease 1s,transform .6s ease 1s}
+.r.in .c i{opacity:1;transform:none}
+.tip{background:rgba(59,130,246,.08);border-radius:0 12px 12px 0;padding:8px 14px}
+#nx{box-shadow:0 0 0 0 rgba(59,130,246,.6);animation:pl 2s infinite}
+@keyframes pl{to{box-shadow:0 0 0 16px rgba(59,130,246,0)}}
+.r>*{opacity:0;transform:translateY(30px) scale(.97);filter:blur(8px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1),filter .7s ease}
+.r.in>*{opacity:1;transform:none;filter:none}
+.r.in>*:nth-child(2){transition-delay:.12s}.r.in>*:nth-child(3){transition-delay:.24s}.r.in>*:nth-child(4){transition-delay:.36s}.r.in>*:nth-child(5){transition-delay:.48s}
+#nx{position:fixed;inset-inline-start:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:44px;height:44px;border-radius:50%;border:0;background:var(--ac);color:#fff;font-size:1.2rem;cursor:pointer;z-index:5}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}.r>*{transition:none;opacity:1;transform:none}.hint{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+
+<section class="r cover">
+<div class="n">AIS PROGRAMMING LAB</div>
+<h1>أساسيات <span>Python</span><br>من الصفر</h1>
+<p>مراجعة كويز المعمل – شرح بسيط خطوة بخطوة</p>
+<div class="by"><b>م/ أيمن محمد</b>Senior .NET Engineer</div>
+<div class="hint">اسحب لتحت ↓</div>
+</section>
+
+<section class="r">
+<div class="n">01 / البداية</div>
+<h2>Anaconda و Jupyter</h2>
+<p><b>Python</b> هي لغة البرمجة. <b>Anaconda</b> برنامج بينزّل Python وكل أدواتها. <b>Jupyter</b> هو المكان اللي بنكتب فيه الكود ونشوف النتيجة تحته.</p>
+<p class="tip">الطريق: Anaconda Navigator ← Jupyter Notebook ← Launch ← New ← Python 3. وشغّل أي خلية بـ Shift + Enter.</p>
+<pre class="c">2 + 3<i>5</i></pre>
+</section>
+
+<section class="r">
+<div class="n">02 / العمليات الحسابية</div>
+<h2>Python آلة حاسبة</h2>
+<div class="t">
+<div>جمع / طرح<b>+ &nbsp; -</b></div>
+<div>ضرب / قسمة<b>* &nbsp; /</b></div>
+<div>القسمة الصحيحة<b>//</b></div>
+<div>باقي القسمة<b>%</b></div>
+<div>أُس<b>**</b></div>
+</div>
+<pre class="c"><u># أي سطر يبدأ بـ # هو تعليق</u>
+10 // 3   <u># 3</u>
+10 % 3    <u># 1</u>
+2 ** 5    <u># 32</u><i>32</i></pre>
+</section>
+
+<section class="r">
+<div class="n">03 / المتغيرات</div>
+<h2>Variable = صندوق عليه اسم</h2>
+<p>العلامة <b>=</b> معناها «خزّن»، مش «يساوي». وأنواع البيانات الأساسية:</p>
+<div class="t">
+<div>عدد صحيح<b>int → 20</b></div>
+<div>عدد عشري<b>float → 7.5</b></div>
+<div>نص<b>str → "sara"</b></div>
+<div>صح / خطأ<b>bool → True</b></div>
+</div>
+<pre class="c">x = 10
+y = 5
+average = (x + y) / 2
+average<i>7.5</i></pre>
+<p class="tip">Name تختلف عن name، لأن Python بتفرّق بين الحروف الكبيرة والصغيرة.</p>
+</section>
+
+<section class="r">
+<div class="n">04 / الإدخال والإخراج</div>
+<h2>print() و input()</h2>
+<p><b>print()</b> تعرض النتيجة على الشاشة. <b>input()</b> تستنى المستخدم يكتب قيمة ويضغط Enter. الفاصلة داخل print تجمع نص وقيمة مع بعض.</p>
+<pre class="c">name = input("Enter your name: ")
+x = 7
+y = 3
+print("Sum:", x + y)<i>Sum: 10</i></pre>
+</section>
+
+<section class="r">
+<div class="n">05 / تحويل الأنواع</div>
+<h2>أشهر فخ في الكويز</h2>
+<p>الدالة input() ترجّع <b>نص دايمًا</b>. فلو جمعت رقمين من غير تحويل، هيتلزقوا جنب بعض.</p>
+<pre class="c">x = input("First: ")     <u># 5</u>
+y = input("Second: ")    <u># 7</u>
+print(x + y)<i>57</i></pre>
+<pre class="c">x = int(input("First: "))
+y = int(input("Second: "))
+print(x + y)<i>12</i></pre>
+<p class="tip">استخدم int() للأعداد الصحيحة و float() للأعداد العشرية. وتقدر تدخل أكتر من رقم بفاصلة باستخدام eval(input()).</p>
+</section>
+
+<section class="r">
+<div class="n">06 / الشروط</div>
+<h2>if / elif / else</h2>
+<p>البرنامج بيسأل سؤال إجابته True أو False، وينفّذ أول شرط يتحقق بس. لازم علامة <b>:</b> بعد الشرط، ومسافة بادئة للأوامر اللي جواه. وتذكّر: <b>==</b> للمقارنة و <b>=</b> للتخزين.</p>
+<pre class="c">number = 8
+if number % 2 == 0:
+    print("Even")
+else:
+    print("Odd")<i>Even</i></pre>
+</section>
+
+<section class="r">
+<div class="n">07 / التكرار (while)</div>
+<h2>كرّر طول ما الشرط صح</h2>
+<p>استخدمها لما متعرفش عدد اللفات مسبقًا. حدّد العداد قبل الـ loop، وحدّثه جواها. لو نسيت التحديث هتحصل <b>infinite loop</b>.</p>
+<pre class="c">number = 1
+while number &lt;= 5:
+    print(number)
+    number = number + 1<i>1 2 3 4 5</i></pre>
+</section>
+
+<section class="r">
+<div class="n">08 / التكرار (for)</div>
+<h2>for و range()</h2>
+<p>استخدمها لما عدد اللفات معروف. الشكل: <b>range(start, stop, step)</b>، والـ stop <b>مش داخل</b> في الأرقام.</p>
+<div class="t">
+<div>range(3)<b>0, 1, 2</b></div>
+<div>range(1, 6)<b>1 … 5</b></div>
+<div>range(5, 0, -1)<b>5 … 1</b></div>
+</div>
+<pre class="c">for count in range(3):
+    print("Hello")<i>Hello ×3</i></pre>
+</section>
+
+<section class="r">
+<div class="n">09 / مثال تطبيقي</div>
+<h2>جمع المبيعات (Accumulation)</h2>
+<p>ابدأ المجموع بصفر، وفي كل لفة أضف القيمة الجديدة على المجموع القديم. ولو كتبت <b>total = value</b> هتمسح اللي قبلها.</p>
+<pre class="c">total_sales = 0
+for day in range(1, 4):
+    sales = float(input("Enter sales: "))
+    total_sales = total_sales + sales
+print("Total sales:", total_sales)<i>100, 200, 300 → 600.0</i></pre>
+</section>
+
+<section class="r cover">
+<div class="n">خلاصة</div>
+<h2>اقرأ ← تتبّع ← اكتب ← كرّر</h2>
+<p>input نص دايمًا • الـ stop مش داخل • == للمقارنة • الـ while تحتاج تحديث العداد.</p>
+<div class="by"><b>بالتوفيق في الكويز</b>م/ أيمن محمد – AIS Programming Lab</div>
+</section>
+
+<button id="nx" aria-label="التالي">↓</button>
+<script>
+var S=[].slice.call(document.querySelectorAll('section')),bar=document.getElementById('bar');
+var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('in')})},{threshold:.25});
+S.forEach(function(s){io.observe(s)});
+function cur(){var y=scrollY+innerHeight/3,i=0;S.forEach(function(s,k){if(s.offsetTop<=y)i=k});return i}
+addEventListener('scroll',function(){var m=document.documentElement.scrollHeight-innerHeight;bar.style.transform='scaleX('+(m>0?scrollY/m:0)+')'},{passive:true});
+function go(d){var i=Math.max(0,Math.min(S.length-1,cur()+d));S[i].scrollIntoView()}
+document.getElementById('nx').onclick=function(){go(1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(1)}if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();go(-1)}});
+</script>
+</body>
+</html>
